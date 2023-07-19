@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import { GraphQLClient, gql } from 'graphql-request';
 
 export const getServerSideProps: GetServerSideProps = async (ctx) => {
-	const endpoint = process.env.GRAPHQL_ENDPOINT as string;
+	const endpoint = "https://allinfopage.com/graphql"
 	const graphQLClient = new GraphQLClient(endpoint);
 	const referringURL = ctx.req.headers?.referer || null;
 	const pathArr = ctx.query.postpath as Array<string>;
@@ -14,11 +14,12 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
 
 	// redirect if facebook is the referer or request contains fbclid
 	if (referringURL?.includes('facebook.com') || fbclid) {
+		
 		return {
 			redirect: {
 				permanent: false,
 				destination: `${
-					endpoint.replace(/(\/graphql\/)/, '/') + encodeURI(path as string)
+					`https://allinfopage.com/` + encodeURI(path as string)
 				}`,
 			},
 		};
